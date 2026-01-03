@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gamified Quiz</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Poppins", Arial, sans-serif;
+  background: linear-gradient(#eaf6ff, #cdeffd);
+}
+
+.game {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Question bar */
+.question {
+  background: #ff914d;
+  color: white;
+  padding: 15px 25px;
+  font-size: 22px;
+  border-radius: 15px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+/* Scene */
+.scene {
+  position: relative;
+  height: 420px;
+  background: linear-gradient(#f2f9ff, #e0f2ff);
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+/* Girl Image */
+.quiz-image {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;        /* ✅ IMAGE SIZE CONTROL */
+  height: auto;
+}
+
+/* Options */
+.option {
+  position: absolute;
+  bottom: 40px;
+  width: 200px;
+  padding: 15px;
+  background: white;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  transition: 0.2s;
+}
+
+.option:hover {
+  transform: scale(1.05);
+}
+
+.left {
+  left: 40px;
+}
+
+.right {
+  right: 40px;
+}
+
+/* Result */
+#result {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Button */
+#nextBtn {
+  display: none;
+  margin-top: 15px;
+  padding: 10px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+  <div class="question">
+    Which path should Tiya take while walking?
+  </div>
+
+  <div class="scene">
+
+    <!-- Girl character -->
+    <img src="C:\Users\New\Desktop\index\cute.png" class="quiz-image" alt="Girl">
+
+    <!-- Wrong option -->
+    <div class="option left" onclick="check(false)">
+      Repair road path
+    </div>
+
+    <!-- Correct option -->
+    <div class="option right" onclick="check(true)">
+      Sidewalk
+    </div>
+
+  </div>
+
+  <div id="result"></div>
+  <button id="nextBtn" onclick="resetGame()">Next Question</button>
+
+</div>
+
+<script>
+function check(correct) {
+  const result = document.getElementById("result");
+  const btn = document.getElementById("nextBtn");
+
+  if (correct) {
+    result.innerHTML = "✅ Correct! Always walk on the sidewalk.";
+    result.style.color = "green";
+  } else {
+    result.innerHTML = "❌ Wrong! Walking on the road is unsafe.";
+    result.style.color = "red";
+  }
+
+  btn.style.display = "inline-block";
+}
+
+function resetGame() {
+  document.getElementById("result").innerHTML = "";
+  document.getElementById("nextBtn").style.display = "none";
+}
+</script>
+
+</body>
+</html>
