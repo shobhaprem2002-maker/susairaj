@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gamified Quiz</title>
+
 <style>
 body {
   margin: 0;
@@ -18,7 +19,6 @@ body {
   text-align: center;
 }
 
-/* Question bar */
 .question {
   background: #ff914d;
   color: white;
@@ -26,10 +26,16 @@ body {
   font-size: 22px;
   border-radius: 15px;
   display: inline-block;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-/* Scene */
+/* Score */
+#score {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
 .scene {
   position: relative;
   height: 420px;
@@ -38,17 +44,14 @@ body {
   overflow: hidden;
 }
 
-/* Girl Image */
 .quiz-image {
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 180px;        
-  height: auto;
+  width: 180px;
 }
 
-/* Options */
 .option {
   position: absolute;
   bottom: 40px;
@@ -67,22 +70,15 @@ body {
   transform: scale(1.05);
 }
 
-.left {
-  left: 40px;
-}
+.left { left: 40px; }
+.right { right: 40px; }
 
-.right {
-  right: 40px;
-}
-
-/* Result */
 #result {
   margin-top: 20px;
   font-size: 24px;
   font-weight: bold;
 }
 
-/* Button */
 #nextBtn {
   display: none;
   margin-top: 15px;
@@ -99,10 +95,12 @@ body {
 
 <body>
 <div class="game">
-  <div class="question" id="question">Question here</div>
+
+  <div class="question" id="question"></div>
+  <div id="score">Score: 0</div>
 
   <div class="scene">
-    <img src="images/girl.jpg">
+    <img src="images/girl.jpg" class="quiz-image" alt="Tiya">
     <div class="option left" id="leftOption"></div>
     <div class="option right" id="rightOption"></div>
   </div>
@@ -112,7 +110,6 @@ body {
 </div>
 
 <script>
-// Questions Array
 const quiz = [
   {q:"Which path should Tiya take while walking?", correct:"Sidewalk", wrong:"Repair road path"},
   {q:"What should Tiya wear when cycling?", correct:"Helmet", wrong:"Sandals"},
@@ -132,55 +129,55 @@ const quiz = [
 ];
 
 let current = 0;
+let score = 0;
 
-// Initialize first question
 function loadQuestion() {
   document.getElementById("question").innerText = quiz[current].q;
-  // Randomize options left/right
-  if(Math.random() > 0.5){
-    document.getElementById("leftOption").innerText = quiz[current].wrong;
-    document.getElementById("leftOption").onclick = () => check(false);
-    document.getElementById("rightOption").innerText = quiz[current].correct;
-    document.getElementById("rightOption").onclick = () => check(true);
+  document.getElementById("score").innerText = `Score: ${score} / ${quiz.length}`;
+
+  if (Math.random() > 0.5) {
+    leftOption.innerText = quiz[current].correct;
+    leftOption.onclick = () => check(true);
+    rightOption.innerText = quiz[current].wrong;
+    rightOption.onclick = () => check(false);
   } else {
-    document.getElementById("rightOption").innerText = quiz[current].wrong;
-    document.getElementById("rightOption").onclick = () => check(false);
-    document.getElementById("leftOption").innerText = quiz[current].correct;
-    document.getElementById("leftOption").onclick = () => check(true);
+    leftOption.innerText = quiz[current].wrong;
+    leftOption.onclick = () => check(false);
+    rightOption.innerText = quiz[current].correct;
+    rightOption.onclick = () => check(true);
   }
-  document.getElementById("result").innerText = "";
-  document.getElementById("nextBtn").style.display = "none";
+
+  result.innerText = "";
+  nextBtn.style.display = "none";
 }
 
-// Check answer
-function check(correct) {
-  const result = document.getElementById("result");
-  const btn = document.getElementById("nextBtn");
-  if(correct){
-    result.innerHTML = "✅ Correct!";
+function check(isCorrect) {
+  if (isCorrect) {
+    score++;
+    result.innerText = "✅ Correct!";
     result.style.color = "green";
   } else {
-    result.innerHTML = "❌ Wrong!";
+    result.innerText = "❌ Wrong!";
     result.style.color = "red";
   }
-  btn.style.display = "inline-block";
+  document.getElementById("score").innerText = `Score: ${score} / ${quiz.length}`;
+  nextBtn.style.display = "inline-block";
 }
 
-// Next question
 function nextQuestion() {
   current++;
-  if(current < quiz.length){
+  if (current < quiz.length) {
     loadQuestion();
   } else {
-    document.getElementById("question").innerText = "🎉 Quiz Completed!";
-    document.getElementById("leftOption").style.display = "none";
-    document.getElementById("rightOption").style.display = "none";
-    document.getElementById("nextBtn").style.display = "none";
-    document.getElementById("result").innerText = "";
+    question.innerText = "🎉 Quiz Completed!";
+    result.innerText = `Final Score: ${score} / ${quiz.length}`;
+    result.style.color = "blue";
+    leftOption.style.display = "none";
+    rightOption.style.display = "none";
+    nextBtn.style.display = "none";
   }
 }
 
-// Start quiz
 loadQuestion();
 </script>
 </body>
