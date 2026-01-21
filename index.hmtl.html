@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Supervision List</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+h2, h3 {
+  text-align: center;
+  margin: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+th, td {
+  border: 1px solid #000;
+  padding: 6px;
+  text-align: center;
+}
+
+th {
+  background: #f0f0f0;
+}
+
+.day {
+  font-weight: bold;
+  background: #e8f0ff;
+}
+
+.duplicate {
+  background: #ffcccc;
+}
+
+.separator td {
+  border-top: 3px solid #000;
+}
+
+@media print {
+  body {
+    margin: 10mm;
+  }
+}
+</style>
+
+<script>
+function checkDuplicates() {
+  document.querySelectorAll("tbody").forEach(dayBlock => {
+    let names = {};
+
+    dayBlock.querySelectorAll("td[data-name]").forEach(cell => {
+      let name = cell.innerText.trim().toLowerCase();
+      cell.classList.remove("duplicate");
+
+      if (name !== "") {
+        if (names[name]) {
+          cell.classList.add("duplicate");
+          names[name].classList.add("duplicate");
+        } else {
+          names[name] = cell;
+        }
+      }
+    });
+  });
+}
+
+function generateSummary() {
+  let count = {};
+
+  document.querySelectorAll("td[data-name]").forEach(cell => {
+    let name = cell.innerText.trim();
+    if (name !== "") {
+      count[name] = (count[name] || 0) + 1;
+    }
+  });
+
+  let table = document.getElementById("summaryTable");
+
+  Object.keys(count).sort().forEach(name => {
+    let row = table.insertRow();
+    row.insertCell(0).innerText = name;
+    row.insertCell(1).innerText = count[name];
+  });
+}
+
+window.onload = function () {
+  checkDuplicates();
+  generateSummary();
+};
+</script>
+</head>
+
+<body>
+
+<h2>ST. CHARLES HIGH SCHOOL</h2>
+<h3>FINAL EXAMINATION – SUPERVISION LIST</h3>
+
+<table>
+<tr>
+  <th rowspan="2">DAY</th>
+  <th colspan="2">HALL</th>
+  <th rowspan="2">X A</th>
+  <th rowspan="2">X B</th>
+  <th rowspan="2">X C</th>
+</tr>
+<tr>
+  <th>H1</th>
+  <th>H2</th>
+</tr>
+
+<!-- MONDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Monday</td>
+  <td data-name>Kavya</td>
+  <td data-name>Kavitha</td>
+  <td data-name>Rekha</td>
+  <td data-name>Teresa</td>
+  <td data-name>Sheeba</td>
+</tr>
+<tr>
+  <td data-name>Chitra</td>
+  <td data-name>Renjitha</td>
+  <td data-name>Lakshmi</td>
+  <td data-name>Reena</td>
+  <td data-name>Malathi</td>
+</tr>
+<tr>
+  <td data-name>Uma</td>
+  <td data-name>Mini</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+<!-- TUESDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Tuesday</td>
+  <td data-name>Teresa </td>
+  <td data-name>Kavya</td>
+  <td data-name>Kavitha</td>
+  <td data-name>Malathi</td>
+  <td data-name>Reena</td>
+</tr>
+<tr>
+  <td data-name>Sheeba</td>
+  <td data-name>Rekha</td>
+  <td data-name>Lakshmi</td>
+  <td data-name>Chitra</td>
+  <td data-name>Mini</td>
+</tr>
+<tr>
+  <td data-name>Mini</td>
+  <td data-name>Renjitha</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+<!-- WEDNESDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Wednesday</td>
+  <td data-name>Renu</td>
+  <td data-name>Uma</td>
+  <td data-name>Malathi</td>
+  <td data-name>Rekha</td>
+  <td data-name>Kavitha</td>
+</tr>
+<tr>
+  <td data-name>Shobha</td>
+  <td data-name>Mini</td>
+  <td data-name>Sheeba</td>
+  <td data-name>Reena</td>
+  <td data-name>Lakshmi</td>
+</tr>
+<tr>
+  <td data-name>Chitra</td>
+  <td data-name>Kavya</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+<!-- THURSDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Thursday</td>
+  <td data-name>Rekha</td>
+  <td data-name>Reena</td>
+  <td data-name>Sheeba</td>
+  <td data-name>Mini</td>
+  <td data-name>Renu</td>
+</tr>
+<tr>
+  <td data-name>Kavya</td>
+  <td data-name>Malathi</td>
+  <td data-name>Shobha</td>
+  <td data-name>Uma</td>
+  <td data-name>Chitra</td>
+</tr>
+<tr>
+  <td data-name>Lakshmi</td>
+  <td data-name>Teresa</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+<!-- FRIDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Friday</td>
+  <td data-name>Shobha</td>
+  <td data-name>Malathi</td>
+  <td data-name>Teresa</td>
+  <td data-name>Uma</td>
+  <td data-name>Chitra</td>
+</tr>
+<tr>
+  <td data-name>Kavitha</td>
+  <td data-name>Kavya</td>
+  <td data-name>Mini</td>
+  <td data-name>Pavithra</td>
+  <td data-name>Rekha</td>
+</tr>
+<tr>
+  <td data-name>Reena</td>
+  <td data-name>Sheeba</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+</table>
+<table>
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Saturday</td>
+  <td data-name>Veena M</td>
+  <td data-name>Malathi</td>
+ 
+  
+</tr>
+
+
+<!-- MONDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Monday</td>
+  <td data-name>Kavya</td>
+  <td data-name>Kavitha</td>
+  <td data-name>Rekha</td>
+  <td data-name>Teresa</td>
+  <td data-name>Sheeba</td>
+</tr>
+<tr>
+  <td data-name>Chitra</td>
+  <td data-name>Renjitha</td>
+  <td data-name>Lakshmi</td>
+  <td data-name>Reena</td>
+  <td data-name>Malathi</td>
+</tr>
+<tr>
+  <td data-name>Uma</td>
+  <td data-name>Mini</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+<!-- TUESDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Tuesday</td>
+  <td data-name>Teresa </td>
+  <td data-name>Kavya</td>
+  <td data-name>Kavitha</td>
+  <td data-name>Malathi</td>
+  <td data-name>Reena</td>
+</tr>
+<tr>
+  <td data-name>Sheeba</td>
+  <td data-name>Rekha</td>
+  <td data-name>Lakshmi</td>
+  <td data-name>Chitra</td>
+  <td data-name>Mini</td>
+</tr>
+<tr>
+  <td data-name>Mini</td>
+  <td data-name>Renjitha</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+<!-- WEDNESDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Wednesday</td>
+  <td data-name>Renu</td>
+  <td data-name>Uma</td>
+  <td data-name>Malathi</td>
+  <td data-name>Rekha</td>
+  <td data-name>Kavitha</td>
+</tr>
+<tr>
+  <td data-name>Shobha</td>
+  <td data-name>Mini</td>
+  <td data-name>Sheeba</td>
+  <td data-name>Reena</td>
+  <td data-name>Lakshmi</td>
+</tr>
+<tr>
+  <td data-name>Chitra</td>
+  <td data-name>Kavya</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+<!-- THURSDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Thursday</td>
+  <td data-name>Rekha</td>
+  <td data-name>Reena</td>
+  <td data-name>Sheeba</td>
+  <td data-name>Mini</td>
+  <td data-name>Renu</td>
+</tr>
+<tr>
+  <td data-name>Kavya</td>
+  <td data-name>Malathi</td>
+  <td data-name>Shobha</td>
+  <td data-name>Uma</td>
+  <td data-name>Chitra</td>
+</tr>
+<tr>
+  <td data-name>Lakshmi</td>
+  <td data-name>Teresa</td>
+  <td></td><td></td><td></td>
+</tr>
+</tbody>
+
+<!-- FRIDAY -->
+<tbody>
+<tr class="separator">
+  <td class="day" rowspan="3">Friday</td>
+  <td data-name>Shobha</td>
+  <td data-name>Malathi</td>
+  <td data-name>Teresa</td>
+  <td data-name>Uma</td>
+  <td data-name>Chitra</td>
+</tr>
+<tr>
+  <td data-name>Kavitha</td>
+  <td data-name>Kavya</td>
+  <td data-name>Mini</td>
+  <td data-name>Pavithra</td>
+  <td data-name>Rekha</td>
+</tr>
+<tr>
+  <td data-name>Reena</td>
+  <td data-name>Sheeba</td>
+  <td></td><td></td><td></td>
+</tr>
+<tr>
+  <td class="day" rowspan="3">Saturday</td>
+  <td data-name>Uma</td>
+  <td data-name>Chitra</td>
+  <td data-name>Kavitha</td>
+  
+</tr>
+</tbody>
+
+</table>
+
+</body>
+</html>
